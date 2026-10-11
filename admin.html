@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CineBook</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">CineBook<span>.</span></a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link active" href="admin.html">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Dashboard -->
+    <main class="page-content admin-section">
+        <div class="container">
+            <h1 class="admin-title">Admin Dashboard</h1>
+            <p class="admin-subtitle">Manage movies and monitor CineBook at a glance.</p>
+
+            <!-- Dashboard Summary -->
+            <div class="row g-3 mb-5">
+                <div class="col-md-6 col-lg-3">
+                    <div class="dashboard-card">
+                        <p>Total Movies</p>
+                        <h2>3</h2>
+                        <span>Movies in catalogue</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="dashboard-card">
+                        <p>Now Showing</p>
+                        <h2>2</h2>
+                        <span>Currently screening</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="dashboard-card">
+                        <p>Coming Soon</p>
+                        <h2>1</h2>
+                        <span>Upcoming releases</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="dashboard-card">
+                        <p>Total Bookings</p>
+                        <h2>0</h2>
+                        <span>Bookings recorded</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Movie Form -->
+            <div class="admin-card mb-5" id="add-movie">
+                <h2>Add New Movie</h2>
+                <form id="addMovieForm">
+                    <div class="mb-3">
+                        <label for="movieTitle" class="form-label">Movie Title</label>
+                        <input type="text" class="form-control" id="movieTitle" name="movieTitle" placeholder="Enter movie title" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="genre" class="form-label">Genre</label>
+                            <input type="text" class="form-control" id="genre" name="genre" placeholder="e.g. Action, Drama" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="duration" class="form-label">Duration</label>
+                            <input type="text" class="form-control" id="duration" name="duration" placeholder="e.g. 2h 30m" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter movie description" required></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="poster" class="form-label">Poster Filename</label>
+                            <input type="text" class="form-control" id="poster" name="poster" placeholder="e.g. Avengers Endgame.jpg" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="status" class="form-label">Release Status</label>
+                            <select class="form-select" id="status" name="status" required>
+                                <option value="Now Showing">Now Showing</option>
+                                <option value="Coming Soon">Coming Soon</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-book">Add Movie</button>
+                </form>
+            </div>
+
+            <!-- Existing Movies -->
+            <div id="manage-movies">
+                <h2 class="admin-heading">Existing Movies</h2>
+                <div class="table-responsive">
+                    <table class="table admin-table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Movie Title</th>
+                                <th>Genre</th>
+                                <th>Duration</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Avengers Endgame: Encore</td>
+                                <td>Action, Adventure</td>
+                                <td>3h 15m</td>
+                                <td><span class="movie-status showing">Now Showing</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-outline-primary">Edit</button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Doraemon: Castle of the Undersea Devil</td>
+                                <td>Adventure, Animation</td>
+                                <td>1h 41m</td>
+                                <td><span class="movie-status showing">Now Showing</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-outline-primary">Edit</button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>The Social Reckoning</td>
+                                <td>Drama, Thriller</td>
+                                <td>2h 00m</td>
+                                <td><span class="movie-status upcoming">Coming Soon</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-outline-primary">Edit</button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer text-center">
+        <p>&copy; 2026 CineBook. All rights reserved.</p>
+    </footer>
+</body>
+</html>
