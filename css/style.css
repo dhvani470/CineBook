@@ -320,3 +320,114 @@ html {
         padding: 25px 20px;
     }
 }
+
+/* Admin Dashboard */
+.admin-section {
+    padding: 45px 0 60px;
+    background-color: var(--white);
+}
+
+.admin-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.admin-subtitle {
+    color: #666666;
+    margin-bottom: 30px;
+}
+
+.admin-card {
+    padding: 28px;
+    border: 2px solid var(--coral);
+    border-radius: 12px;
+}
+
+.admin-card h2,
+.admin-heading {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 22px;
+}
+
+.admin-card .form-label {
+    font-weight: 500;
+}
+
+.admin-card .form-control {
+    padding: 10px 12px;
+}
+
+.admin-card .form-control:focus {
+    border-color: var(--coral);
+}
+
+.admin-table {
+    border: 1px solid var(--border);
+}
+
+.admin-table thead th {
+    background-color: var(--light-grey);
+    font-weight: 600;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 14px;
+}
+
+@media (max-width: 576px) {
+    .admin-title {
+        font-size: 26px;
+    }
+
+    .admin-card {
+        padding: 20px;
+    }
+}
+
+/* Dashboard Summary Cards */
+.dashboard-card {
+    height: 100%;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--coral);
+    border-radius: 8px;
+    background-color: var(--white);
+}
+
+.dashboard-card p {
+    color: #666666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.dashboard-card h2 {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.dashboard-card span {
+    color: #777777;
+    font-size: 12px;
+}
+
+.movie-status {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.movie-status.showing {
+    color: #187747;
+    background-color: #E4F5EC;
+}
+
+.movie-status.upcoming {
+    color: #8A5A00;
+    background-color: #FFF1D6;
+}
