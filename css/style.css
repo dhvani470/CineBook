@@ -431,3 +431,173 @@ html {
     color: #8A5A00;
     background-color: #FFF1D6;
 }
+
+
+
+/* Movies Page */
+
+.text-coral {
+    color: var(--coral);
+}
+
+.movies-section {
+    padding: 55px 0 70px;
+    background-color: var(--white);
+}
+
+.movies-header {
+    margin-bottom: 40px;
+}
+
+.section-label {
+    color: var(--coral);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.movies-header h1 {
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.movies-subtitle {
+    color: #666666;
+    font-size: 14px;
+    max-width: 550px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
+
+/* Movie Cards */
+
+.movie-card {
+    height: 100%;
+    padding: 0 24px 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: transform 0.2s ease;
+}
+
+.movie-card:hover {
+    transform: translateY(-3px);
+}
+
+
+/* Movie Posters */
+
+.movie-poster {
+    display: block;
+    width: 100%;
+    max-width: 243px;
+    height: 320px;
+    margin: 0 auto 22px;
+    object-fit: cover;
+    object-position: center;
+    background-color: var(--light-grey);
+    flex-shrink: 0;
+}
+
+
+/* Movie Information */
+
+.movie-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+}
+
+.movie-badge {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+.showing-badge {
+    color: #187747;
+    background-color: #E4F5EC;
+}
+
+.upcoming-badge {
+    color: #8A5A00;
+    background-color: #FFF1D6;
+}
+
+.movie-card-body h5 {
+    min-height: 0;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.movie-info {
+    color: #666666;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.movie-duration {
+    color: #777777;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.movie-card-body .btn-book {
+    width: auto;
+    margin-top: auto;
+    padding: 12px 22px;
+}
+
+
+/* Footer */
+
+.movies-footer {
+    padding: 22px 0 10px;
+    background-color: var(--light-grey);
+    border-top: 1px solid var(--border);
+}
+
+.movies-footer p {
+    color: #777777;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+
+/* Responsive Layout */
+
+@media (max-width: 576px) {
+    .movies-section {
+        padding: 40px 0 50px;
+    }
+
+    .movies-header h1 {
+        font-size: 28px;
+    }
+
+    .movie-card {
+        padding: 0 18px 20px;
+    }
+
+    .movie-poster {
+        height: 300px;
+    }
+
+    .movie-card-body h5 {
+        font-size: 18px;
+    }
+}
