@@ -1,5 +1,3 @@
-
-/* Colors used throughout the website */
 :root {
     --coral: #F84464;
     --coral-dark: #E53656;
@@ -9,7 +7,7 @@
     --border: #EEEEEE;
 }
 
-/* General styling */
+/* General Styling */
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
@@ -20,12 +18,12 @@ body {
     flex-direction: column;
 }
 
-.page-content {
-    flex: 1;
-}
-
 html {
     scroll-behavior: smooth;
+}
+
+.page-content {
+    flex: 1;
 }
 
 /* Navbar */
@@ -59,7 +57,7 @@ html {
     color: var(--coral);
 }
 
-/* Welcome section */
+/* Welcome Section */
 .welcome {
     padding: 65px 0;
     background-color: var(--white);
@@ -106,10 +104,10 @@ html {
     border-color: var(--coral-dark);
 }
 
-/* Movies section */
+/* Movies Section */
 .movies-section {
-    padding: 45px 0 60px;
-    background-color: var(--light-grey);
+    padding: 55px 0 70px;
+    background-color: var(--white);
 }
 
 .movies-section h2,
@@ -124,13 +122,51 @@ html {
     margin-bottom: 25px;
 }
 
-/* Movie cards */
+.movies-header {
+    margin-bottom: 40px;
+}
+
+.section-label {
+    color: var(--coral);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.movies-header h1 {
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.movies-subtitle {
+    color: #666666;
+    font-size: 14px;
+    max-width: 550px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
+.text-coral {
+    color: var(--coral);
+}
+
+/* Movie Cards */
 .movie-card {
     height: 100%;
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    padding: 0 24px 24px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
     background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: transform 0.2s ease;
+}
+
+.movie-card:hover {
+    transform: translateY(-3px);
 }
 
 .movie-card .card-body {
@@ -143,12 +179,29 @@ html {
     margin-top: auto;
 }
 
+.movie-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+}
+
+.movie-card-body h5 {
+    min-height: 0;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+/* Movie Posters */
 .poster-container {
     height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: var(--white);
 }
 
 .poster-container img {
@@ -157,8 +210,19 @@ html {
     object-fit: contain;
 }
 
+.movie-poster {
+    display: block;
+    width: 100%;
+    max-width: 243px;
+    height: 320px;
+    margin: 0 auto 22px;
+    object-fit: cover;
+    object-position: center;
+    background-color: var(--light-grey);
+    flex-shrink: 0;
+}
 
-
+/* Movie Information */
 .card-body {
     padding: 18px;
 }
@@ -172,7 +236,45 @@ html {
     font-size: 14px;
 }
 
-/* About section */
+.movie-badge {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+.showing-badge {
+    color: #187747;
+    background-color: #E4F5EC;
+}
+
+.upcoming-badge {
+    color: #8A5A00;
+    background-color: #FFF1D6;
+}
+
+.movie-info {
+    color: #666666;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.movie-duration {
+    color: #777777;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.movie-card-body .btn-book {
+    width: auto;
+    margin-top: auto;
+    padding: 12px 22px;
+}
+
+/* About Section */
 .about-section {
     padding: 40px 0;
     background-color: var(--white);
@@ -195,28 +297,19 @@ html {
     margin: 0;
 }
 
-/* Mobile styling */
-@media (max-width: 576px) {
-    .welcome {
-        padding: 45px 0;
-    }
-
-    .welcome h1 {
-        font-size: 32px;
-    }
-
-    .navbar-brand {
-        font-size: 22px;
-    }
-
-    .nav-link {
-        margin-left: 8px;
-        font-size: 14px;
-    }
+.movies-footer {
+    padding: 22px 0 10px;
+    background-color: var(--light-grey);
+    border-top: 1px solid var(--border);
 }
 
+.movies-footer p {
+    color: #777777;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
 
-/* Movie details page */
+/* Movie Details Page */
 .back-link {
     color: var(--coral);
     text-decoration: none;
@@ -263,7 +356,7 @@ html {
     max-width: 430px;
     margin: 0 auto;
     padding: 35px;
-    border: 2px solid #F84464;
+    border: 2px solid var(--coral);
     border-radius: 12px;
     background-color: var(--white);
 }
@@ -313,12 +406,6 @@ html {
 .register-text a:hover {
     color: var(--coral-dark);
     text-decoration: underline;
-}
-
-@media (max-width: 576px) {
-    .login-card {
-        padding: 25px 20px;
-    }
 }
 
 /* Admin Dashboard */
@@ -377,16 +464,6 @@ html {
     padding: 14px;
 }
 
-@media (max-width: 576px) {
-    .admin-title {
-        font-size: 26px;
-    }
-
-    .admin-card {
-        padding: 20px;
-    }
-}
-
 /* Dashboard Summary Cards */
 .dashboard-card {
     height: 100%;
@@ -432,155 +509,73 @@ html {
     background-color: #FFF1D6;
 }
 
-
-
-/* Movies Page */
-
-.text-coral {
-    color: var(--coral);
-}
-
-.movies-section {
-    padding: 55px 0 70px;
+/* My Bookings */
+.booking-card {
     background-color: var(--white);
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
 }
 
-.movies-header {
-    margin-bottom: 40px;
-}
-
-.section-label {
-    color: var(--coral);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-}
-
-.movies-header h1 {
-    font-size: 34px;
-    font-weight: 700;
-    margin-bottom: 12px;
-}
-
-.movies-subtitle {
-    color: #666666;
-    font-size: 14px;
-    max-width: 550px;
-    margin: 0 auto;
-    line-height: 1.8;
-}
-
-
-/* Movie Cards */
-
-.movie-card {
-    height: 100%;
-    padding: 0 24px 24px;
-    overflow: hidden;
+.booking-header {
     display: flex;
-    flex-direction: column;
-    background-color: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    transition: transform 0.2s ease;
+    justify-content: space-between;
+    gap: 12px;
 }
 
-.movie-card:hover {
-    transform: translateY(-3px);
-}
-
-
-/* Movie Posters */
-
-.movie-poster {
-    display: block;
-    width: 100%;
-    max-width: 243px;
-    height: 320px;
-    margin: 0 auto 22px;
-    object-fit: cover;
-    object-position: center;
-    background-color: var(--light-grey);
-    flex-shrink: 0;
-}
-
-
-/* Movie Information */
-
-.movie-card-body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0;
-}
-
-.movie-badge {
-    display: inline-block;
-    padding: 5px 9px;
-    border-radius: 5px;
-    font-size: 11px;
+.booking-title {
+    font-size: 1.15rem;
     font-weight: 600;
-    margin-bottom: 14px;
+    margin-bottom: 5px;
 }
 
-.showing-badge {
-    color: #187747;
-    background-color: #E4F5EC;
-}
-
-.upcoming-badge {
-    color: #8A5A00;
-    background-color: #FFF1D6;
-}
-
-.movie-card-body h5 {
-    min-height: 0;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 1.5;
-    margin-bottom: 10px;
-}
-
-.movie-info {
-    color: #666666;
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 8px;
-}
-
-.movie-duration {
+.booking-id,
+.booking-label {
     color: #777777;
-    font-size: 12px;
-    margin-bottom: 20px;
+    font-size: 0.9rem;
 }
 
-.movie-card-body .btn-book {
-    width: auto;
-    margin-top: auto;
-    padding: 12px 22px;
+.booking-divider {
+    border: 0;
+    border-top: 1px solid #eeeeee;
+    margin: 18px 0;
 }
 
-
-/* Footer */
-
-.movies-footer {
-    padding: 22px 0 10px;
-    background-color: var(--light-grey);
-    border-top: 1px solid var(--border);
+.booking-details {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
 }
 
-.movies-footer p {
-    color: #777777;
-    font-size: 12px;
-    margin-bottom: 12px;
+.booking-detail {
+    margin: 0;
 }
 
+.booking-total {
+    color: #ff3f6c;
+    font-weight: 600;
+}
 
 /* Responsive Layout */
-
 @media (max-width: 576px) {
+    .welcome {
+        padding: 45px 0;
+    }
+
+    .welcome h1 {
+        font-size: 32px;
+    }
+
+    .navbar-brand {
+        font-size: 22px;
+    }
+
+    .nav-link {
+        margin-left: 8px;
+        font-size: 14px;
+    }
+
     .movies-section {
         padding: 40px 0 50px;
     }
@@ -599,5 +594,23 @@ html {
 
     .movie-card-body h5 {
         font-size: 18px;
+    }
+
+    .login-card {
+        padding: 25px 20px;
+    }
+
+    .admin-title {
+        font-size: 26px;
+    }
+
+    .admin-card {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .booking-details {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
