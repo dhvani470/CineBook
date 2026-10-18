@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/register";
+const API_URL = "http://localhost:5001/register";
 
 const registerForm = document.getElementById("registerForm");
 
