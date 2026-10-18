@@ -1,5 +1,5 @@
 
-const API_URL = "http://localhost:5000/my-bookings";
+const API_URL = "http://localhost:5001/my-bookings";
 const bookingsList = document.getElementById("bookingsList");
 
 async function loadBookings() {

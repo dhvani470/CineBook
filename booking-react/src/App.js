@@ -39,7 +39,7 @@ function App() {
 
     // Load the selected movie from the database API
     useEffect(() => {
-        fetch("http://localhost:5000/movies")
+        fetch("http://localhost:5001/movies")
             .then(function (response) {
                 if (!response.ok) {
                     throw new Error("Unable to load movies.");
@@ -78,7 +78,7 @@ function App() {
         setBookingConfirmed(false);
 
         const url =
-            "http://localhost:5000/booked-seats?movieId=" +
+            "http://localhost:5001/booked-seats?movieId=" +
             encodeURIComponent(movieId) +
             "&showDate=" +
             encodeURIComponent(showDate) +
@@ -165,7 +165,7 @@ function App() {
                 );
             }
 
-            const response = await fetch("http://localhost:5000/bookings", {
+            const response = await fetch("http://localhost:5001/bookings", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -190,7 +190,7 @@ function App() {
 
             // Refresh booked seats after a successful booking
             const seatsResponse = await fetch(
-                "http://localhost:5000/booked-seats?movieId=" +
+                "http://localhost:5001/booked-seats?movieId=" +
                     encodeURIComponent(movieId) +
                     "&showDate=" +
                     encodeURIComponent(showDate) +

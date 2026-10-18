@@ -1,5 +1,4 @@
-
-const BOOKINGS_API_URL = "http://localhost:5000/admin/bookings";
+const BOOKINGS_API_URL = "http://localhost:5001/admin/bookings";
 const bookingsTable = document.getElementById("bookingsTableBody");
 
 async function loadAdminBookings() {
@@ -56,6 +55,7 @@ async function loadAdminBookings() {
 
         const row = document.createElement("tr");
         const cell = document.createElement("td");
+
         cell.colSpan = 8;
         cell.className = "text-danger text-center py-4";
         cell.textContent = error.message;
@@ -68,18 +68,24 @@ async function loadAdminBookings() {
 function formatBookingDate(value) {
     if (!value) return "N/A";
 
+    // Extract the date without timezone conversion.
     const datePart = String(value).split("T")[0];
     const parts = datePart.split("-");
 
     if (parts.length !== 3) return datePart;
+
+    const year = parts[0];
+    const month = Number(parts[1]);
+    const day = parts[2];
 
     const months = [
         "Jan", "Feb", "Mar", "Apr", "May", "Jun",
         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
 
-    return parts[2] + " " + (months[Number(parts[1]) - 1] || "") +
-        " " + parts[0];
+    if (month < 1 || month > 12) return datePart;
+
+    return `${day} ${months[month - 1]} ${year}`;
 }
 
 // Admin Logout
@@ -88,7 +94,6 @@ const logoutButton = document.getElementById("adminLogoutBtn");
 if (logoutButton) {
     logoutButton.addEventListener("click", function (event) {
         event.preventDefault();
-
         window.location.href = "index.html";
     });
 }
