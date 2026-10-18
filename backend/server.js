@@ -5,10 +5,9 @@ const crypto = require("crypto");
 const { promisify } = require("util");
 
 const app = express();
-const PORT = 5000;
+const PORT = 5001;
 const scrypt = promisify(crypto.scrypt);
 
-// CORS configuration for Live Server and React
 app.use(cors({
     origin: [
         "http://localhost:5500",
@@ -570,7 +569,7 @@ app.get("/my-bookings", function (req, res) {
             b.booking_id,
             m.title,
             m.poster,
-            b.show_date,
+            DATE_FORMAT(b.show_date, '%Y-%m-%d') AS show_date,
             b.show_time,
             b.total_price,
             b.booking_date,
@@ -616,7 +615,7 @@ app.get("/admin/bookings", function (req, res) {
             u.full_name,
             u.username,
             m.title AS movie_title,
-            b.show_date,
+            DATE_FORMAT(b.show_date, '%Y-%m-%d') AS show_date,
             b.show_time,
             GROUP_CONCAT(
                 bs.seat_number

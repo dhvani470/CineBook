@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/movies";
+const API_URL = "http://localhost:5001/movies";
 const BOOKING_URL = "http://localhost:3000/";
 const homeMovieList = document.getElementById("homeMovieList");
 
