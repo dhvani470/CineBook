@@ -8,6 +8,10 @@ const app = express();
 const PORT = 5001;
 const scrypt = promisify(crypto.scrypt);
 
+const path = require("path");
+const fs = require("fs");
+const multer = require("multer");
+
 app.use(cors({
     origin: [
         "http://localhost:5500",
@@ -18,6 +22,43 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+// Configure movie poster uploads
+const uploadsDir = path.join(__dirname, "uploads");
+
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+app.use("/uploads", express.static(uploadsDir));
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, uploadsDir);
+    },
+    filename: function (req, file, cb) {
+        const extension = path.extname(file.originalname).toLowerCase();
+        const uniqueName = Date.now() + "-" + crypto.randomBytes(6).toString("hex") + extension;
+        cb(null, uniqueName);
+    }
+});
+
+const upload = multer({
+    storage: storage,
+    limits: {fileSize: 5 * 1024 * 1024},
+    fileFilter: function (req, file, cb) {
+        const allowedTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+        ];
+
+        if (allowedTypes.includes(file.mimetype)) 
+            cb(null, true);
+        else 
+            cb(new Error("Only JPG, JPEG, PNG and WEBP images are allowed."));
+    }
+});
 
 // Connect to MySQL
 const db = mysql.createConnection({
@@ -218,25 +259,40 @@ app.get("/movies", function (req, res) {
 });
 
 // Add movie
-app.post("/movies", function (req, res) {
-    const movie = req.body;
+app.post("/movies", upload.single("poster"), function (req, res) {
+    const movie = req.body || {};
 
-    const sql = `INSERT INTO movies (title, poster, language, genre, duration, ticket_price, status)
-                VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    if (!movie.title || !movie.language || !movie.genre ||
+        !movie.duration || !movie.ticket_price || !movie.status) {
+        return res.status(400).json({
+            message: "Please fill in all movie details."
+        });
+    }
+
+    if (!req.file) {
+        return res.status(400).json({
+            message: "Please select a movie poster."
+        });
+    }
+
+    const poster = "/uploads/" + req.file.filename;
+
+    const sql = `INSERT INTO movies
+        (title, poster, language, genre, duration, ticket_price, status)
+        VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
     const values = [
         movie.title,
-        movie.poster,
+        poster,
         movie.language,
         movie.genre,
         movie.duration,
-        movie.ticket_price,
+        Number(movie.ticket_price),
         movie.status
     ];
 
     db.query(sql, values, function (error, result) {
-        if (error) 
-        {
+        if (error) {
             console.log("Add movie error:", error.message);
 
             return res.status(500).json({
@@ -252,21 +308,33 @@ app.post("/movies", function (req, res) {
 });
 
 // Update movie
-app.put("/movies/:id", function (req, res) {
-    const movie = req.body;
+app.put("/movies/:id", upload.single("poster"), function (req, res) {
+    const movie = req.body || {};
+    const movieId = req.params.id;
 
-    const sql = `UPDATE movies SET title = ?, poster = ?, language = ?, genre = ?, duration = ?, ticket_price = ?, status = ?
-                WHERE movie_id = ?`;
+    if (!movie.title || !movie.language || !movie.genre || !movie.duration || !movie.ticket_price || !movie.status) 
+    {
+        return res.status(400).json({
+            message: "Please fill in all movie details."
+        });
+    }
+
+    const poster = req.file ? "/uploads/" + req.file.filename : null;
+
+    const sql = `UPDATE movies
+        SET title = ?, poster = COALESCE(?, poster), language = ?,
+            genre = ?, duration = ?, ticket_price = ?, status = ?
+        WHERE movie_id = ?`;
 
     const values = [
         movie.title,
-        movie.poster,
+        poster,
         movie.language,
         movie.genre,
         movie.duration,
-        movie.ticket_price,
+        Number(movie.ticket_price),
         movie.status,
-        req.params.id
+        movieId
     ];
 
     db.query(sql, values, function (error, result) {
@@ -290,6 +358,49 @@ app.put("/movies/:id", function (req, res) {
             message: "Movie updated successfully."
         });
     });
+});
+
+// PATCH: Update only the ticket price
+app.patch("/movies/:id", async (req, res) => {
+    const { id } = req.params;
+    const { ticket_price } = req.body;
+
+    if (ticket_price === undefined || ticket_price === null ||
+        String(ticket_price).trim() === "" ||
+        !Number.isFinite(Number(ticket_price)) ||
+        Number(ticket_price) <= 0)
+    {
+        return res.status(400).json({
+            message: "Please provide a valid ticket price greater than zero."
+        });
+    }
+
+    try
+    {
+        const [result] = await db.query(
+            "UPDATE movies SET ticket_price = ? WHERE movie_id = ?",
+            [Number(ticket_price), id]
+        );
+
+        if (result.affectedRows === 0)
+        {
+            return res.status(404).json({
+                message: "Movie not found."
+            });
+        }
+
+        return res.status(200).json({
+            message: "Ticket price updated successfully."
+        });
+    }
+    catch (error)
+    {
+        console.error("Error updating ticket price:", error);
+
+        return res.status(500).json({
+            message: "Failed to update ticket price."
+        });
+    }
 });
 
 // Delete movie

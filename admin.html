@@ -82,10 +82,12 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="poster" class="form-label">Poster Filename *</label>
-                            <input type="text" class="form-control" id="poster" placeholder="e.g. Avengers Endgame.jpg"
-                                maxlength="255" required>
-                            <small class="text-muted">Enter the filename from your images folder.</small>
+                            <label for="poster" class="form-label">Movie Poster *</label>
+                            <input type="file" class="form-control" id="poster"
+                                accept="image/jpeg,image/png,image/webp">
+                            <small class="text-muted" id="currentPosterText">
+                                Choose a JPG, PNG, or WEBP image from your computer.
+                            </small>
                         </div>
 
                         <div class="col-md-6 mb-3">
