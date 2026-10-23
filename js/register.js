@@ -11,17 +11,17 @@ registerForm.addEventListener("submit", async function (event) {
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
 
-    if (password !== confirmPassword) {
+    if (password !== confirmPassword) 
+    {
         alert("Passwords do not match!");
         return;
     }
 
-    try {
+    try 
+    {
         const response = await fetch(API_URL, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 fullName: fullName,
                 username: username,
@@ -32,15 +32,14 @@ registerForm.addEventListener("submit", async function (event) {
 
         const result = await response.json();
 
-        if (!response.ok) {
+        if (!response.ok) 
             throw new Error(result.message || "Registration failed.");
-        }
 
         alert("Registration successful! Please log in.");
-
         window.location.href = "login.html";
-
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         alert(error.message || "Could not connect to the server.");
         console.error(error);
     }

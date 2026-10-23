@@ -5,13 +5,14 @@ const homeMovieList = document.getElementById("homeMovieList");
 const pageParams = new URLSearchParams(window.location.search);
 const currentUserId = pageParams.get("userId");
 
-async function loadHomeMovies() {
-    try {
+async function loadHomeMovies() 
+{
+    try 
+    {
         const response = await fetch(API_URL);
 
-        if (!response.ok) {
+        if (!response.ok)
             throw new Error("Could not fetch movies.");
-        }
 
         const movies = await response.json();
 
@@ -22,7 +23,8 @@ async function loadHomeMovies() {
             return movie.status === "Now Showing";
         });
 
-        if (showingMovies.length === 0) {
+        if (showingMovies.length === 0) 
+        {
             homeMovieList.innerHTML = `
                 <div class="col-12 text-center">
                     <p>No movies are currently showing.</p>
@@ -30,12 +32,14 @@ async function loadHomeMovies() {
             return;
         }
 
-        showingMovies.forEach(function (movie) {
+        showingMovies.forEach(function (movie) 
+        {
             const column = document.createElement("div");
             column.className = "col-md-6 col-lg-3";
 
             const card = document.createElement("div");
             card.className = "card movie-card";
+            card.style.textAlign = "center";
 
             const posterContainer = document.createElement("div");
             posterContainer.className = "poster-container";
@@ -54,19 +58,19 @@ async function loadHomeMovies() {
 
             const info = document.createElement("p");
             info.className = "card-text";
-            info.textContent = movie.genre + " | " + movie.duration;
+            info.textContent = movie.genre + " · " + movie.duration;
 
             const link = document.createElement("a");
             link.className = "btn btn-book";
             link.textContent = "Book Tickets";
+            link.style.width = 100 + "%";
 
             // Pass the movie ID and user ID to the booking app
             const bookingParams = new URLSearchParams();
             bookingParams.set("movieId", movie.movie_id);
 
-            if (currentUserId) {
+            if (currentUserId) 
                 bookingParams.set("userId", currentUserId);
-            }
 
             link.href = BOOKING_URL + "?" + bookingParams.toString();
 
@@ -81,8 +85,9 @@ async function loadHomeMovies() {
 
             homeMovieList.appendChild(column);
         });
-
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         console.error("Error loading Home page movies:", error);
 
         homeMovieList.innerHTML = `

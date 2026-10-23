@@ -1,4 +1,3 @@
-
 const API_URL = "http://localhost:5001/movies";
 const BOOKING_URL = "http://localhost:3000/";
 
@@ -8,19 +7,21 @@ const movieList = document.getElementById("movieList");
 const currentParams = new URLSearchParams(window.location.search);
 const currentUserId = currentParams.get("userId");
 
-async function loadMovies() {
-    try {
+async function loadMovies() 
+{
+    try 
+    {
         const response = await fetch(API_URL);
 
-        if (!response.ok) {
+        if (!response.ok) 
             throw new Error("Could not fetch movies.");
-        }
 
         const movies = await response.json();
 
         movieList.innerHTML = "";
 
-        if (movies.length === 0) {
+        if (movies.length === 0) 
+        {
             movieList.innerHTML = `
                 <div class="col-12 text-center">
                     <p>No movies available right now.</p>
@@ -32,7 +33,7 @@ async function loadMovies() {
             const isShowing = movie.status === "Now Showing";
 
             const column = document.createElement("div");
-            column.className = "col-12 col-sm-6 col-lg-4";
+            column.className = "col-12 col-md-6 col-lg-4";
 
             const card = document.createElement("div");
             card.className = "movie-card h-100";
@@ -47,9 +48,7 @@ async function loadMovies() {
             body.className = "movie-card-body";
 
             const badge = document.createElement("span");
-            badge.className =
-                "movie-badge " +
-                (isShowing ? "showing-badge" : "upcoming-badge");
+            badge.className = "movie-badge " + (isShowing ? "showing-badge" : "upcoming-badge");
             badge.textContent = movie.status;
 
             const title = document.createElement("h5");
@@ -65,21 +64,22 @@ async function loadMovies() {
 
             let bookButton;
 
-            if (isShowing) {
+            if (isShowing) 
+            {
                 bookButton = document.createElement("a");
                 bookButton.className = "btn btn-book w-100";
 
                 const bookingParams = new URLSearchParams();
                 bookingParams.set("movieId", movie.movie_id);
 
-                if (currentUserId) {
+                if (currentUserId) 
                     bookingParams.set("userId", currentUserId);
-                }
 
-                bookButton.href =
-                    BOOKING_URL + "?" + bookingParams.toString();
+                bookButton.href = BOOKING_URL + "?" + bookingParams.toString();
                 bookButton.textContent = "Book Tickets";
-            } else {
+            } 
+            else 
+            {
                 bookButton = document.createElement("button");
                 bookButton.type = "button";
                 bookButton.className = "btn btn-book w-100";
@@ -99,7 +99,9 @@ async function loadMovies() {
             movieList.appendChild(column);
         });
 
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         console.error("Error loading movies:", error);
 
         movieList.innerHTML = `

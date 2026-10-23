@@ -1,22 +1,22 @@
 const BOOKINGS_API_URL = "http://localhost:5001/admin/bookings";
 const bookingsTable = document.getElementById("bookingsTableBody");
 
-async function loadAdminBookings() {
+async function loadAdminBookings() 
+{
     if (!bookingsTable) return;
 
-    try {
-        const response = await fetch(BOOKINGS_API_URL, {
-            credentials: "include"
-        });
+    try 
+    {
+        const response = await fetch(BOOKINGS_API_URL);
 
-        if (!response.ok) {
+        if (!response.ok) 
             throw new Error("Could not load bookings. Check the backend.");
-        }
 
         const bookings = await response.json();
         bookingsTable.innerHTML = "";
 
-        if (bookings.length === 0) {
+        if (bookings.length === 0) 
+        {
             bookingsTable.innerHTML = `
                 <tr>
                     <td colspan="8" class="text-center py-4">
@@ -26,7 +26,8 @@ async function loadAdminBookings() {
             return;
         }
 
-        bookings.forEach(function (booking) {
+        bookings.forEach(function (booking) 
+        {
             const row = document.createElement("tr");
 
             const values = [
@@ -36,7 +37,7 @@ async function loadAdminBookings() {
                 formatBookingDate(booking.show_date),
                 booking.show_time || "N/A",
                 booking.seats || "N/A",
-                booking.ticket_count ?? 0,
+                booking.ticket_count != null ? booking.ticket_count : 0,
                 "₹" + Number(booking.total_price || 0).toFixed(2)
             ];
 
@@ -48,7 +49,9 @@ async function loadAdminBookings() {
 
             bookingsTable.appendChild(row);
         });
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         console.error("Bookings error:", error);
 
         bookingsTable.innerHTML = "";
@@ -91,7 +94,8 @@ function formatBookingDate(value) {
 // Admin Logout
 const logoutButton = document.getElementById("adminLogoutBtn");
 
-if (logoutButton) {
+if (logoutButton) 
+{
     logoutButton.addEventListener("click", function (event) {
         event.preventDefault();
         window.location.href = "index.html";
