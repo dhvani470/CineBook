@@ -111,11 +111,24 @@ function App()
 
     // Build the correct poster URL
     let poster = movie.poster || "";
+    let posterUrl = "";
 
-    if (!poster.startsWith("images/"))
-        poster = "images/" + poster;
+    if (poster.startsWith("/uploads/")) 
+        posterUrl = "http://localhost:5001" + poster;
 
-    const posterUrl = "http://localhost:5500/" + poster;
+    else if (poster.startsWith("uploads/")) 
+        posterUrl = "http://localhost:5001/" + poster;
+
+    else if (poster.startsWith("http://") || poster.startsWith("https://"))
+        posterUrl = poster;
+
+    else 
+    {
+        if (!poster.startsWith("images/"))
+            poster = "images/" + poster;
+
+        posterUrl = "http://localhost:5500/" + poster;
+    }
 
     function handleSeatClick(seat) 
     {

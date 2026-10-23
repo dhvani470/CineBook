@@ -7,20 +7,41 @@ const movieList = document.getElementById("movieList");
 const currentParams = new URLSearchParams(window.location.search);
 const currentUserId = currentParams.get("userId");
 
-async function loadMovies() 
+// Get the correct poster URL
+function getPosterUrl(poster)
 {
-    try 
+    if (!poster)
+        return "";
+
+    if (poster.startsWith("/uploads/"))
+        return "http://localhost:5001" + poster;
+
+    if (poster.startsWith("uploads/"))
+        return "http://localhost:5001/" + poster;
+
+    if (poster.startsWith("http://") || poster.startsWith("https://"))
+        return poster;
+
+    if (poster.startsWith("images/"))
+        return poster;
+
+    return "images/" + poster;
+}
+
+async function loadMovies()
+{
+    try
     {
         const response = await fetch(API_URL);
 
-        if (!response.ok) 
+        if (!response.ok)
             throw new Error("Could not fetch movies.");
 
         const movies = await response.json();
 
         movieList.innerHTML = "";
 
-        if (movies.length === 0) 
+        if (movies.length === 0)
         {
             movieList.innerHTML = `
                 <div class="col-12 text-center">
@@ -40,7 +61,7 @@ async function loadMovies()
 
             const poster = document.createElement("img");
             poster.className = "movie-poster";
-            poster.src = "images/" + movie.poster;
+            poster.src = getPosterUrl(movie.poster);
             poster.alt = movie.title;
             poster.loading = "lazy";
 
@@ -64,7 +85,7 @@ async function loadMovies()
 
             let bookButton;
 
-            if (isShowing) 
+            if (isShowing)
             {
                 bookButton = document.createElement("a");
                 bookButton.className = "btn btn-book w-100";
@@ -72,13 +93,13 @@ async function loadMovies()
                 const bookingParams = new URLSearchParams();
                 bookingParams.set("movieId", movie.movie_id);
 
-                if (currentUserId) 
+                if (currentUserId)
                     bookingParams.set("userId", currentUserId);
 
                 bookButton.href = BOOKING_URL + "?" + bookingParams.toString();
                 bookButton.textContent = "Book Tickets";
-            } 
-            else 
+            }
+            else
             {
                 bookButton = document.createElement("button");
                 bookButton.type = "button";
@@ -98,9 +119,8 @@ async function loadMovies()
             column.appendChild(card);
             movieList.appendChild(column);
         });
-
-    } 
-    catch (error) 
+    }
+    catch (error)
     {
         console.error("Error loading movies:", error);
 

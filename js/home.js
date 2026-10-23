@@ -5,9 +5,30 @@ const homeMovieList = document.getElementById("homeMovieList");
 const pageParams = new URLSearchParams(window.location.search);
 const currentUserId = pageParams.get("userId");
 
-async function loadHomeMovies() 
+// Get the correct poster URL
+function getPosterUrl(poster)
 {
-    try 
+    if (!poster)
+        return "";
+
+    if (poster.startsWith("/uploads/"))
+        return "http://localhost:5001" + poster;
+
+    if (poster.startsWith("uploads/"))
+        return "http://localhost:5001/" + poster;
+
+    if (poster.startsWith("http://") || poster.startsWith("https://"))
+        return poster;
+
+    if (poster.startsWith("images/"))
+        return poster;
+
+    return "images/" + poster;
+}
+
+async function loadHomeMovies()
+{
+    try
     {
         const response = await fetch(API_URL);
 
@@ -23,7 +44,7 @@ async function loadHomeMovies()
             return movie.status === "Now Showing";
         });
 
-        if (showingMovies.length === 0) 
+        if (showingMovies.length === 0)
         {
             homeMovieList.innerHTML = `
                 <div class="col-12 text-center">
@@ -32,7 +53,7 @@ async function loadHomeMovies()
             return;
         }
 
-        showingMovies.forEach(function (movie) 
+        showingMovies.forEach(function (movie)
         {
             const column = document.createElement("div");
             column.className = "col-md-6 col-lg-3";
@@ -45,7 +66,7 @@ async function loadHomeMovies()
             posterContainer.className = "poster-container";
 
             const poster = document.createElement("img");
-            poster.src = "images/" + movie.poster;
+            poster.src = getPosterUrl(movie.poster);
             poster.alt = movie.title;
             poster.loading = "lazy";
 
@@ -69,7 +90,7 @@ async function loadHomeMovies()
             const bookingParams = new URLSearchParams();
             bookingParams.set("movieId", movie.movie_id);
 
-            if (currentUserId) 
+            if (currentUserId)
                 bookingParams.set("userId", currentUserId);
 
             link.href = BOOKING_URL + "?" + bookingParams.toString();
@@ -85,8 +106,8 @@ async function loadHomeMovies()
 
             homeMovieList.appendChild(column);
         });
-    } 
-    catch (error) 
+    }
+    catch (error)
     {
         console.error("Error loading Home page movies:", error);
 
