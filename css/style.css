@@ -52,8 +52,7 @@ html {
     margin-left: 18px;
 }
 
-.nav-link:hover,
-.nav-link.active {
+.nav-link:hover{
     color: var(--coral);
 }
 
@@ -110,8 +109,7 @@ html {
     background-color: var(--white);
 }
 
-.movies-section h2,
-.about-section h2 {
+.movies-section h2{
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 8px;
@@ -272,18 +270,6 @@ html {
     width: auto;
     margin-top: auto;
     padding: 12px 22px;
-}
-
-/* About Section */
-.about-section {
-    padding: 40px 0;
-    background-color: var(--white);
-}
-
-.about-section p {
-    color: #666666;
-    margin-top: 12px;
-    margin-bottom: 0;
 }
 
 /* Footer */

@@ -2,32 +2,23 @@
 const API_URL = "http://localhost:5001/my-bookings";
 const bookingsList = document.getElementById("bookingsList");
 
-async function loadBookings() {
+async function loadBookings() 
+{
     if (!bookingsList) return;
 
     const userId = new URLSearchParams(window.location.search).get("userId");
 
-    if (!userId) {
-        bookingsList.innerHTML = `
-            <div class="col-12">
-                <p class="text-danger">Please log in to view your bookings.</p>
-                <a href="login.html" class="btn btn-book">Login</a>
-            </div>`;
-        return;
-    }
+    try 
+    {
+        const response = await fetch(API_URL + "?userId=" + encodeURIComponent(userId));
 
-    try {
-        const response = await fetch(
-            API_URL + "?userId=" + encodeURIComponent(userId)
-        );
-
-        if (!response.ok) {
+        if (!response.ok) 
             throw new Error("Could not load bookings. Please try again.");
-        }
 
         const bookings = await response.json();
 
-        if (!Array.isArray(bookings) || bookings.length === 0) {
+        if (!Array.isArray(bookings) || bookings.length === 0) 
+        {
             bookingsList.innerHTML = `
                 <div class="col-12">
                     <p>You have not booked any tickets yet.</p>
@@ -39,7 +30,8 @@ async function loadBookings() {
 
         bookingsList.innerHTML = "";
 
-        bookings.forEach(function (booking) {
+        bookings.forEach(function (booking) 
+        {
             const card = document.createElement("div");
             card.className = "booking-card";
 
@@ -60,8 +52,7 @@ async function loadBookings() {
 
             const total = document.createElement("p");
             total.className = "booking-total";
-            total.textContent =
-                "₹" + Number(booking.total_price || 0).toFixed(2);
+            total.textContent = "₹" + Number(booking.total_price || 0).toFixed(2);
 
             header.append(heading, total);
 
@@ -89,11 +80,7 @@ async function loadBookings() {
             const date = new Date(booking.show_date);
             const formattedDate = isNaN(date.getTime())
                 ? booking.show_date
-                : date.toLocaleDateString("en-IN", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric"
-                });
+                : date.toLocaleDateString("en-IN", {day: "2-digit", month: "short", year: "numeric"});
 
             addDetail("SHOW DATE", formattedDate);
             addDetail("SHOW TIME", booking.show_time || "N/A");
@@ -104,7 +91,8 @@ async function loadBookings() {
             bookingsList.appendChild(card);
         });
     }
-    catch (error) {
+    catch (error) 
+    {
         console.error("Error loading bookings:", error);
 
         bookingsList.innerHTML = "";

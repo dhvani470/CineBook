@@ -8,25 +8,29 @@ const submitButton = document.getElementById("submitMovieBtn");
 const cancelButton = document.getElementById("cancelEditBtn");
 
 // Load movies from MySQL
-async function loadMovies() {
-    try {
+async function loadMovies() 
+{
+    try 
+    {
         const response = await fetch(API_URL + "/movies");
 
-        if (!response.ok) {
+        if (!response.ok) 
             throw new Error("Could not load movies.");
-        }
 
         movies = await response.json();
         displayMovies();
         updateCounts();
-    } catch (error) {
+    }
+    catch (error) 
+    {
         console.error(error);
         alert("Could not load movies. Check that the backend is running.");
     }
 }
 
 // Display movies in the admin table
-function displayMovies() {
+function displayMovies() 
+{
     movieTable.innerHTML = "";
 
     movies.forEach(function (movie) {
@@ -49,9 +53,7 @@ function displayMovies() {
         const statusLabel = document.createElement("span");
 
         statusLabel.textContent = movie.status;
-        statusLabel.className = movie.status === "Now Showing"
-            ? "movie-status showing"
-            : "movie-status upcoming";
+        statusLabel.className = movie.status === "Now Showing" ? "movie-status showing" : "movie-status upcoming";
 
         statusCell.appendChild(statusLabel);
         row.appendChild(statusCell);
@@ -81,16 +83,16 @@ function displayMovies() {
 }
 
 // Update movie counts
-function updateCounts() {
+function updateCounts() 
+{
     let showing = 0;
     let comingSoon = 0;
 
     movies.forEach(function (movie) {
-        if (movie.status === "Now Showing") {
+        if (movie.status === "Now Showing")
             showing++;
-        } else {
+        else
             comingSoon++;
-        }
     });
 
     document.getElementById("totalMoviesCount").textContent = movies.length;
@@ -99,7 +101,8 @@ function updateCounts() {
 }
 
 // Add or update a movie
-movieForm.addEventListener("submit", async function (event) {
+movieForm.addEventListener("submit", async function (event) 
+{
     event.preventDefault();
 
     const movie = {
@@ -112,19 +115,16 @@ movieForm.addEventListener("submit", async function (event) {
         status: document.getElementById("status").value
     };
 
-    if (
-        !movie.title || !movie.poster || !movie.language ||
-        !movie.genre || !movie.duration ||
-        !Number.isFinite(movie.ticket_price) || movie.ticket_price <= 0
-    ) {
+    if (!movie.title || !movie.poster || !movie.language || !movie.genre || !movie.duration || movie.ticket_price <= 0) 
+    {
         alert("Enter valid movie details and a price greater than zero.");
         return;
     }
 
-    try {
+    try 
+    {
         const response = await fetch(
-            API_URL + "/movies" +
-            (editingId === null ? "" : "/" + editingId),
+            API_URL + "/movies" + (editingId === null ? "" : "/" + editingId),
             {
                 method: editingId === null ? "POST" : "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -135,24 +135,24 @@ movieForm.addEventListener("submit", async function (event) {
 
         const result = await response.json();
 
-        if (!response.ok) {
+        if (!response.ok) 
             throw new Error(result.message || "Could not save movie.");
-        }
 
-        alert(editingId === null
-            ? "Movie added successfully!"
-            : "Movie updated successfully!");
+        alert(editingId === null ? "Movie added successfully!" : "Movie updated successfully!");
 
         resetForm();
         await loadMovies();
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         alert(error.message);
         console.error(error);
     }
 });
 
 // Fill the form when Edit is clicked
-function editMovie(id) {
+function editMovie(id) 
+{
     const movie = movies.find(function (item) {
         return Number(item.movie_id) === Number(id);
     });
@@ -171,16 +171,16 @@ function editMovie(id) {
     submitButton.textContent = "Update Movie";
     cancelButton.hidden = false;
 
-    document.getElementById("add-movie").scrollIntoView({
-        behavior: "smooth"
-    });
+    document.getElementById("add-movie").scrollIntoView({behavior: "smooth"});
 }
 
 // Delete a movie
-async function deleteMovie(id) {
+async function deleteMovie(id) 
+{
     if (!confirm("Are you sure you want to delete this movie?")) return;
 
-    try {
+    try 
+    {
         const response = await fetch(API_URL + "/movies/" + id, {
             method: "DELETE",
             credentials: "include"
@@ -188,22 +188,24 @@ async function deleteMovie(id) {
 
         const result = await response.json();
 
-        if (!response.ok) {
+        if (!response.ok)
             throw new Error(result.message || "Could not delete movie.");
-        }
 
         if (Number(editingId) === Number(id)) resetForm();
 
         await loadMovies();
         alert("Movie deleted successfully!");
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         alert(error.message);
         console.error(error);
     }
 }
 
 // Reset the form
-function resetForm() {
+function resetForm() 
+{
     movieForm.reset();
     editingId = null;
     submitButton.textContent = "Add Movie";
@@ -215,7 +217,8 @@ cancelButton.addEventListener("click", resetForm);
 // Logout
 const logoutButton = document.getElementById("adminLogoutBtn");
 
-if (logoutButton) {
+if (logoutButton) 
+{
     logoutButton.addEventListener("click", function (event) {
         event.preventDefault();
         window.location.href = "index.html";
